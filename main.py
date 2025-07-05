@@ -88,7 +88,7 @@ class SMODGCN:
             if unsupervised:
                 loss = 0.
             else:
-                loss = self.lamda * F.binary_cross_entropy(u[train_mask],
+                loss = F.binary_cross_entropy(u[train_mask],
                                                            labels[train_mask].float())
             A_1 = torch.sigmoid(u.matmul(u.t()))  #
             A_0 = 1 - A_1
@@ -98,7 +98,7 @@ class SMODGCN:
 
             S = features.t()
             hyper_loss = F.mse_loss(S, hyper_out.t())
-            loss = 0.5 * hyper_loss + loss
+            loss = hyper_loss + loss
 
 
             if modul == True:
